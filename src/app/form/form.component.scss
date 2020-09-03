@@ -1,69 +1,84 @@
+$red: #ff0033;
+$breakpoint-md: 768px;
+
+
 * {
     box-sizing: border-box;
 }
 
-/* Chrome, Safari, Edge, Opera */
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-/* Firefox */
 input[type=number] {
-  -moz-appearance: textfield;
+    -moz-appearance: textfield;
 }
 
-form {
-    width: 600px;
-    padding: 93px 30px 90px 30px;
+.form {
+    @media (min-width: $breakpoint-md) { 
+        width: 650px;
+        height: 450px;
+    }
+    padding: 90px 40px;
     background-color: white;
+
+    &__input {
+        border: 1px solid #e6e6e6;
+        display: block;
+        width: 100%;
+        height: 42px;
+        padding: 0 14px;
+        border-radius: 5px;
+    }
+
+    &__row {
+        @media (min-width: $breakpoint-md) { 
+            display: flex;
+        }
+        margin-bottom: 25px;
+    }
+
+    &__label {
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
 }
 
-.basic-input {
-    border: 1px solid #e6e6e6;
-    display: block;
-    width: 100%;
-    height: 42px;
-    padding: 0 14px;
-    border-radius: 5px;
-}
-
-.custom-label {
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.form-row {
-    display: flex;
-    margin-bottom: 25px;
-}
-
-.form-group {
-    width: 50%;
-}
 
 .error-message {
-    color: #ff0033;
+    color: $red;
     font-size: 12px;
     margin-top: 4px;
 }
 
-.btn-convert {
-    background-color: #282828;
-    color: white;
-    border: 1px solid #333;
+.btn {
     font-size: 14px;
     padding: 10px 20px;
     text-decoration: none;
     border-radius: 5px;
     margin-top: 25px;
     cursor: pointer;
+
+    &--dark {
+        background-color: #282828;
+        color: white;
+        border: 1px solid #333;
+    }
+
+    &--basic {
+        background-color: white;
+        border: 2px solid #333;
+    }
+
+    &[disabled] {
+        opacity: 0.3;
+    }
 }
 
-.btn-convert[disabled] {
-    opacity: 0.3;
-}
 
 .output {
     font-size: 24px;
@@ -71,12 +86,14 @@ form {
 }
 
 .output-error {
-    color: #ff0033;
+    color: $red;
 }
 
 .input-error {
-    border: 1px solid #ff0033;
+    border: 1px solid $red;
 }
+
+
 
 // tooltip
   
@@ -102,8 +119,6 @@ form {
     margin-left: -80px;
     padding: 7px;
     width: 140px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
     border-radius: 3px;
     background-color: #282828;
     color: #fff;
@@ -113,7 +128,6 @@ form {
     line-height: 1.2;
   }
   
-  /* Triangle hack to make tooltip look like a speech bubble */
   [data-tooltip]:after {
     position: absolute;
     bottom: 150%;
@@ -121,7 +135,6 @@ form {
     margin-left: -5px;
     width: 0;
     border-top: 5px solid #000;
-    border-top: 5px solid hsla(0, 0%, 20%, 0.9);
     border-right: 5px solid transparent;
     border-left: 5px solid transparent;
     content: " ";
@@ -136,9 +149,8 @@ form {
 }
 
 
-
-
 // helpers
+
 .flex {
     display: flex;
 }
@@ -151,8 +163,24 @@ form {
     margin-bottom: 8px;
 }
 
-.mr5 {
-    margin-right: 24px;
+.mr-sm-5 {
+    @media (min-width: $breakpoint-md) { 
+        margin-right: 25px;
+    }
+}
+
+.mr-3 { 
+    margin-right: 12px;
+}
+
+.mb-sm-0 {
+    @media (min-width: $breakpoint-md) { 
+        margin-bottom: 0;
+    }
+}
+
+.mb-5 {
+    margin-bottom: 25px;
 }
 
 .ml2 {
@@ -161,4 +189,14 @@ form {
 
 .break-word {
     overflow-wrap: break-word;
+}
+
+.w-sm-50 {
+    @media (min-width: $breakpoint-md) { 
+        width: 50%;
+    }
+}
+
+.uppercase {
+    text-transform: uppercase;
 }

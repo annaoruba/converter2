@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss']
 })
+
 export class FormComponent {
 
   public output;
-  public errorMessage1: string;
-  public rangeControl;
   public afterConvert: boolean = false;
+  public isCorrect: boolean;
 
   public readonly numericRegex = /^[a-zA-Z0-9]+$/;
 
@@ -30,15 +30,18 @@ export class FormComponent {
 
   convert() {
     this.output = parseInt(this.numberToConvert.value, this.sourceSystemNumber.value).toString(this.targetSystemNumber.value);
-    console.log(this.numberToConvert);
-    console.log(this.convertForm);
     this.afterConvert = true;
-    //return parseInt(string, radix);
+    let check = parseInt(this.output, this.targetSystemNumber.value).toString(this.sourceSystemNumber.value);
+    this.isCorrect = check.toUpperCase() == this.numberToConvert.value.toUpperCase()
   }
 
   checkIsNan() {
-    return isNaN(this.output);
-    // if (isNaN(this.output)) return true
-    // else return false;
+    return this.output === 'NaN';
   }
+
+  clearAll() {
+    this.convertForm.reset();
+    this.output = '';
+  }
+
 }

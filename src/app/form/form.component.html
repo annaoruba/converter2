@@ -1,75 +1,51 @@
-<!-- System liczbowy liczby źródłowej: <input reqired name="num1" [(ngModel)]="num1"/>
-<br/>
-<br/>
-System liczbowy liczny docelowej: <input reqired name="num2" [(ngModel)]="num2"/>
-<br/>
-<br/>
-Liczba do przeliczenia: <input reqired name="num3" [(ngModel)]="num3"/>
-<br/>
-<br/>
-<button (click)="convert()">Convert</button>
-<br/>
-<br/>
-Result: {{output}} -->
-
-
-
-
-<!-- <form (ngSubmit)="convert()" #f="ngForm" [formGroup]="convertForm">
-  <div class="form-group">
-    <label for="sourceSystemNumber">System liczbowy liczby źródłowej:</label>
-    <input name="sourceSystemNumber" [(ngModel)]="sourceSystemNumber" formControlName="systemNumber" />
-
-  </div>
-  <div class="form-group">
-    <label for="targetSystemNumber">System liczbowy liczby docelowej:</label>
-    <input required name="targetSystemNumber" [(ngModel)]="targetSystemNumber" />
-  </div>
-  <div class="form-group">
-    <label for="numberToConvert">Liczba do przeliczenia:</label>
-    <input required name="numberToConvert" [(ngModel)]="numberToConvert" />
-  </div>
-  <button [disabled]="!f.valid">Convert</button>
-</form>
-Result: {{output}} -->
-
-<form (ngSubmit)="convert()" #f="ngForm" [formGroup]="convertForm">
-  <div class="form-row">
-    <div class="form-group mr5">
+<form class="form" (ngSubmit)="convert()" #f="ngForm" [formGroup]="convertForm">
+  <div class="form__row">
+    <div class="w-sm-50 mr-sm-5 mb-5 mb-5">
       <div class="flex align-center mb2">
-          <label class="custom-label" for="sourceSystemNumber">Source numeral system</label> 
-          <div data-tooltip="Enter a number from 2 to 36"><img src="assets/information.svg" class="ml2" alt="info" width="15px" height="15px"></div>
+        <label class="form__label" for="sourceSystemNumber">Source numeral system</label>
+        <div data-tooltip="Enter a number from 2 to 36"><img src="assets/information.svg" class="ml2" alt="info"
+            width="15px" height="15px"></div>
       </div>
-      <input class="basic-input" [class.input-error]="sourceSystemNumber.touched && sourceSystemNumber.errors" type="number" name="sourceSystemNumber" formControlName="sourceSystemNumber" />
-      <!-- sourceSystemNumber.errors.required {{sourceSystemNumber.errors?.required}} -->
-      <div class="error-message" *ngIf="sourceSystemNumber.touched && sourceSystemNumber.errors?.required">This field is required</div>
-      <div class="error-message" *ngIf="sourceSystemNumber.touched && sourceSystemNumber.errors?.max || sourceSystemNumber.errors?.min">min
-        max error</div>
+      <input class="form__input" [class.input-error]="sourceSystemNumber.touched && sourceSystemNumber.errors"
+        type="number" name="sourceSystemNumber" formControlName="sourceSystemNumber" />
+      <div class="error-message" *ngIf="sourceSystemNumber.touched && sourceSystemNumber.errors?.required">This field is
+        required</div>
+      <div class="error-message"
+        *ngIf="sourceSystemNumber.touched && sourceSystemNumber.errors?.max || sourceSystemNumber.errors?.min">Enter a
+        number from 2 to 36</div>
     </div>
-    <div class="form-group">
-        <div class="flex align-center mb2">
-            <label class="custom-label" for="targetSystemNumber">Target numeral system</label>
-            <div data-tooltip="Enter a number from 2 to 36"><img src="assets/information.svg" class="ml2" alt="info" width="15px" height="15px"></div>
-        </div>
-      <input class="basic-input" [class.input-error]="targetSystemNumber.touched && targetSystemNumber.errors" name="targetSystemNumber" formControlName="targetSystemNumber" />
-      <div class="error-message" *ngIf="targetSystemNumber.touched && targetSystemNumber.errors?.required">This field is required</div>
-      <div class="error-message" *ngIf="targetSystemNumber.touched && targetSystemNumber.errors?.max || targetSystemNumber.errors?.min">min
-        max error</div>
+    <div class="w-sm-50">
+      <div class="flex align-center mb2">
+        <label class="form__label" for="targetSystemNumber">Target numeral system</label>
+        <div data-tooltip="Enter a number from 2 to 36"><img src="assets/information.svg" class="ml2" alt="info"
+            width="15px" height="15px"></div>
+      </div>
+      <input class="form__input" [class.input-error]="targetSystemNumber.touched && targetSystemNumber.errors"
+        name="targetSystemNumber" formControlName="targetSystemNumber" />
+      <div class="error-message" *ngIf="targetSystemNumber.touched && targetSystemNumber.errors?.required">This field is
+        required</div>
+      <div class="error-message"
+        *ngIf="targetSystemNumber.touched && targetSystemNumber.errors?.max || targetSystemNumber.errors?.min">Enter a
+        number from 2 to 36</div>
     </div>
   </div>
 
   <div>
     <div class="flex align-center mb2">
-      <label class="custom-label" for="numberToConvert">Number to be converted</label>
-      <div data-tooltip="Enter a number ..."><img src="assets/information.svg" class="ml2" alt="info" width="15px" height="15px"></div>
+      <label class="form__label" for="numberToConvert">Number to be converted</label>
+      <div data-tooltip="Enter a correct number in selected system"><img src="assets/information.svg" class="ml2"
+          alt="info" width="15px" height="15px"></div>
     </div>
-    <input class="basic-input" [class.input-error]="numberToConvert.touched && numberToConvert.errors" name="numberToConvert" formControlName="numberToConvert" />
-    <div class="error-message" *ngIf="numberToConvert.touched && numberToConvert.errors?.required">This field is required</div>
+    <input class="form__input" [class.input-error]="numberToConvert.touched && numberToConvert.errors"
+      name="numberToConvert" formControlName="numberToConvert" />
+    <div class="error-message" *ngIf="numberToConvert.touched && numberToConvert.errors?.required">This field is
+      required</div>
     <div class="error-message" *ngIf="numberToConvert.touched && numberToConvert.errors?.pattern">Is not a number</div>
   </div>
-  <button class="btn-convert" [disabled]="convertForm.status !== 'VALID'">Convert</button>
-  <br/>  <br/>
-  <div [className]="(checkIsNan() && afterConvert) ? 'output-error' : 'output'" class="break-word">
-      {{ (checkIsNan() && afterConvert) ? 'calc error - uzupelnic, nieprawidlowa liczba wpisana w danym systemie albo .. ? cos' : output}}
+  <button class="btn btn--dark mr-3" [disabled]="convertForm.status !== 'VALID'">Convert</button>
+  <button class="btn btn--basic" (click)="clearAll()">Clear</button>
+  <br /> <br />
+  <div class="break-word uppercase" [ngClass]="((checkIsNan() || !this.isCorrect) && afterConvert) ? 'output-error' : 'output'">
+    {{ ((checkIsNan() || !this.isCorrect) && afterConvert) ? 'Calculation error - you entered an incorrect number' : output }}
   </div>
 </form>
