@@ -99,16 +99,12 @@ input[type=number] {
   
   [data-tooltip] {
     position: relative;
-    z-index: 2;
-    cursor: pointer;
-    height: 15px;
   }
   
   [data-tooltip]:before,
   [data-tooltip]:after {
     visibility: hidden;
     opacity: 0;
-    pointer-events: none;
   }
   
   [data-tooltip]:before {
@@ -128,19 +124,6 @@ input[type=number] {
     line-height: 1.2;
   }
   
-  [data-tooltip]:after {
-    position: absolute;
-    bottom: 150%;
-    left: 50%;
-    margin-left: -5px;
-    width: 0;
-    border-top: 5px solid #000;
-    border-right: 5px solid transparent;
-    border-left: 5px solid transparent;
-    content: " ";
-    font-size: 0;
-    line-height: 0;
-  }
   
   [data-tooltip]:hover:before,
   [data-tooltip]:hover:after {
